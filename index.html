@@ -556,7 +556,7 @@ body::after {
 
 .screen {
     position: fixed;
-       background: radial-gradient(ellipse at center, #0ff 0%, #000 80%);
+       background: radial-gradient(ellipse at center, rgb(216, 255, 253) 0%, #000 80%);
   overflow: hidden;
   filter: contrast(1.3) brightness(1.1);
   top: 50%;
@@ -576,6 +576,18 @@ body::after {
   z-index: 9999;
   display: none; /* caché par défaut */
   }
+
+  .screen::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: url('https://media.giphy.com/media/oEI9uBYSzLpBK/giphy.gif') center center / cover;
+  opacity: 0.12;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  animation: noise 1s steps(8) infinite;
+}
 
 .glitch-fullpage .screen {
   display: block;
@@ -694,14 +706,14 @@ body::after {
   <li data-fr="Jeux web & mécaniques interactives (Wireless: Override)" data-en="Web games & interactive mechanics (Wireless: Override)">Jeux web & mécaniques interactives (Wireless: Override)</li>
 </ul>
     <a class="button" href="https://wirelessoverride.vercel.app" target="_blank" rel="noopener noreferrer">
-      Demo Wireless: Override (v0.3)
+      Demo Wireless: Override (v0.03)
     </a>
     <h2>Contact</h2>
-    <form aria-label="Formulaire de contact">
-      <input type="text" name="name" placeholder="Nom complet" required aria-required="true" />
+    <form action="https://formspree.io/f/manjjjoe" method="POST">
+      <input type="text" name="name" placeholder="Nom-Name" required aria-required="true" />
       <input type="email" name="email" placeholder="Email" required aria-required="true" />
-      <textarea name="message" rows="4" placeholder="Votre message..." required aria-required="true"></textarea>
-      <button type="submit" aria-label="Envoyer le message">Envoyer</button>
+      <textarea name="message" rows="4" placeholder="Votre message.../Your message" required aria-required="true"></textarea>
+      <button type="submit" aria-label="Envoyer/Send">Envoyer</button>
     </form>
   </div>
   
@@ -801,7 +813,7 @@ langToggle.addEventListener('click', () => {
   <div class="glitch"></div>
 
   <!-- Texte au centre -->
-  <div class="signal-text">PERTE DE SIGNAL</div>
+<div class="signal-text" data-fr="PERTE DE SIGNAL" data-en="SIGNAL LOST">PERTE DE SIGNAL</div>
 </div>
 </body>
 </html>
