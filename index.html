@@ -713,7 +713,7 @@ body::after {
       <input type="text" name="name" placeholder="Nom-Name" required aria-required="true" />
       <input type="email" name="email" placeholder="Email" required aria-required="true" />
       <textarea name="message" rows="4" placeholder="Votre message.../Your message..." required aria-required="true"></textarea>
-      <button type="submit" aria-label="Envoyer/Send">Envoyer</button>
+      <button type="submit" aria-label="Envoyer">Envoyer/Send</button>
     </form>
   </div>
   
@@ -746,22 +746,39 @@ body::after {
 
 
 <script>
-  
- const langToggle = document.getElementById('langToggle');
-  let currentLang = 'fr';
+const langToggle = document.getElementById('langToggle');
+let currentLang = 'fr';
 
-  langToggle.addEventListener('click', () => {
-    currentLang = currentLang === 'fr' ? 'en' : 'fr';
+langToggle.addEventListener('click', () => {
+  currentLang = currentLang === 'fr' ? 'en' : 'fr';
 
-    document.querySelectorAll('[data-fr]').forEach(el => {
-      el.classList.remove('glitch-switch'); // reset anim
-      void el.offsetWidth; // force reflow pour rejouer anim
-      el.textContent = el.dataset[currentLang];
-      el.classList.add('glitch-switch');
-    });
-
-    langToggle.textContent = currentLang === 'fr' ? 'FR / ENG' : 'ENG / FR';
+  document.querySelectorAll('[data-fr]').forEach(el => {
+    el.classList.remove('glitch-switch'); // reset anim
+    void el.offsetWidth; // force reflow pour rejouer anim
+    el.textContent = el.dataset[currentLang];
+    el.classList.add('glitch-switch');
   });
+
+  langToggle.textContent = currentLang === 'fr' ? 'FR / ENG' : 'ENG / FR';
+
+  // Synthèse vocale à la fin du switch (un peu après)
+  const synth = window.speechSynthesis;
+
+  function speak(text) {
+    const utter = new SpeechSynthesisUtterance(text);
+    const voices = synth.getVoices();
+    utter.voice = voices.find(voice => voice.name.includes('Female')) || voices[0];
+    synth.speak(utter);
+  }
+
+  setTimeout(() => {
+    if (synth.getVoices().length === 0) {
+      synth.onvoiceschanged = () => speak(currentLang === 'fr' ? "Signal perdu..." : "Signal lost...");
+    } else {
+      speak(currentLang === 'fr' ? "Connection en cours..." : "Connecting...");
+    }
+  }, 0); // délai de 4s avant de parler (ajuste si besoin)
+});
 
   const audio = document.getElementById("audioPlayer");
 const playPause = document.getElementById("playPause");
