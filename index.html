@@ -445,7 +445,9 @@
      margin-top: 1rem;
 }
 
-#playPause {
+#playPause,
+#prevTrack,
+#nextTrack {
   background: none;
   border: none;
   font-size: 20px;
@@ -454,7 +456,9 @@
   transition: transform 0.2s;
 }
 
-#playPause:hover {
+#playPause:hover,
+#prevTrack:hover,
+#nextTrack:hover {
   transform: scale(1.2);
 }
 
@@ -691,9 +695,11 @@ body::after {
   <div class="noise-overlay">
 <div class="background-overlay">
   <div class="slideshow">
-    <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExeW9sb2g3YjF3cGlvdjhtNm80cjRpdjEycHljZHF0cTJmZTh5eHFjaSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/26FPKhUtNG3TW74f6/giphy.gif" class="slide active">
+     <img src="https://portfolio-veena.vercel.app/backgroundveena.png" class="slide active">
+    <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExeW9sb2g3YjF3cGlvdjhtNm80cjRpdjEycHljZHF0cTJmZTh5eHFjaSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/26FPKhUtNG3TW74f6/giphy.gif" class="slide">
     <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExenhrb2M5ODNnODJpanliaDRqMzVvMWI4ejB4NmNyYTU3cHd3ZGY2YyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3ohhwHVQR1t6syIu9q/giphy.gif" class="slide">
     <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExb2htYWs0dnQ5N2Q1dGtybmw4ZzhqNHhpNTVzczF0NzRtcDhyaWJmeCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l0K4ooVdfUdgWWZ8c/giphy.gif" class="slide">
+   
   </div>
 
 
@@ -706,14 +712,14 @@ body::after {
 
     </div>
       <div class="custom-audio-player">
-    <button id="playPause" aria-label="Lecture/Pause">
-      ▶
-    </button>
+    <button id="prevTrack" aria-label="Piste précédente">⏮</button>
+<button id="playPause" aria-label="Lecture/Pause">▶</button>
+<button id="nextTrack" aria-label="Piste suivante">⏭</button>
     <div class="progress-container">
       <div class="progress-bar" id="progressBar"></div>
     </div>
     <audio id="audioPlayer">
-        <source src="track1.mp3" type="audio/mp3" />
+        <source src="synthwave-beats-perfect-background-music-341849.mp3" type="audio/mp3" />
     </audio>
   </div>
           <div class="lang-switch">
@@ -827,18 +833,32 @@ langToggle.addEventListener('click', () => {
 const audio = document.getElementById("audioPlayer");
 const playPause = document.getElementById("playPause");
 const progressBar = document.getElementById("progressBar");
-audio.loop = true;
+const prevTrack = document.getElementById("prevTrack");
+const nextTrack = document.getElementById("nextTrack");
+
 const playlist = [
   "cyberpunk-background-276859.mp3",
   "synthwave-beats-perfect-background-music-341849.mp3",
-  
-  "track3.mp3"
+   "royal-entry-cyberpunk-music-230630.mp3",
+    "cyberpunk-276856.mp3",
+      "cyberpunk-trailler-281117.mp3",
+  // tu peux en ajouter d'autres ici
 ];
 
 let currentTrack = 0;
 
-audio.src = playlist[currentTrack];
+// Fonction pour charger et jouer une piste
+function loadTrack(index) {
+  currentTrack = (index + playlist.length) % playlist.length; // boucle circulaire
+  audio.src = playlist[currentTrack];
+  console.log(audio.src)
+  audio.load(); // 👈 Ajouté !
+  audio.play();
+  playPause.textContent = "⏸";
+  progressBar.classList.add("playing");
+}
 
+// Bouton Lecture / Pause
 playPause.addEventListener("click", () => {
   if (audio.paused) {
     audio.play();
@@ -851,21 +871,27 @@ playPause.addEventListener("click", () => {
   }
 });
 
-// Quand une piste se termine, on passe à la suivante
 audio.addEventListener("ended", () => {
-  currentTrack = (currentTrack + 1) % playlist.length; // boucle
+  currentTrack = (currentTrack + 1) % playlist.length;
   audio.src = playlist[currentTrack];
   audio.play();
 });
 
+// Bouton Suivant
+nextTrack.addEventListener("click", () => {
+  loadTrack(currentTrack + 1);
+});
+
+// Bouton Précédent
+prevTrack.addEventListener("click", () => {
+  loadTrack(currentTrack - 1);
+});
 audio.addEventListener("timeupdate", () => {
   const progress = (audio.currentTime / audio.duration) * 100;
   progressBar.style.width = `${progress}%`;
 });
-audio.addEventListener("ended", () => {
-  playPause.textContent = "▶";
-  progressBar.classList.remove("playing");
-});
+
+
 const toggleGlitchFullPage = () => {
   document.body.classList.toggle('glitch-fullpage');
 };
