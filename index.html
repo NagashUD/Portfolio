@@ -17,6 +17,8 @@
     overflow-x: hidden;
     position: relative;
     height: 100vh;
+  
+    overflow: 100%;
   }
 
   /* Container pulse border */
@@ -32,6 +34,8 @@
     animation: pulseBorder 3s ease-in-out infinite;
     position: relative;
     z-index: 10;
+      justify-content: center;
+    text-align: center;
   }
   @keyframes pulseBorder {
     0%, 100% {
@@ -44,17 +48,39 @@
     }
   }
 
-  header {
-    text-align: center;
-    padding: 3rem 1rem 4rem;
-    background: rgba(0 0 0 / 0.3);
-    backdrop-filter: blur(6px);
-    box-shadow: 0 0 25px #00ffff99;
-    border-radius: 15px;
-    position: relative;
-    z-index: 10;
-  }
 
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #0f0f1a;
+  padding: 10px 20px;
+  border-bottom: 1px solid #00ffff33;
+  text-align: center;
+  height: 100px;
+}
+.lang-switch button {
+  background: none;
+  color: #00ffff;
+  border: 1px solid #00ffff;
+  padding: 4px 8px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background 0.3s ease;
+    margin-top: 1rem;
+}
+
+.lang-switch button:hover {
+  background: #00ffff22;
+}
+
+.music-player audio {
+  width: 140px;
+  height: 30px;
+  background-color: transparent;
+  filter: invert(1);
+}
   header h1 {
     font-size: 3rem;
     color: #00ffff;
@@ -62,7 +88,9 @@
       0 0 5px #00ffffaa,
       0 0 10px #00ffffbb;
   }
-  header p {
+
+  
+    header p {
     color: #ff00ffcc;
     font-size: 1.2rem;
     font-weight: 700;
@@ -182,6 +210,7 @@
       right: 20px;
       width: 120px;
       height: 120px;
+      flex: -2;
     }
 
     .radar svg {
@@ -371,33 +400,301 @@
 .avatar:hover .avatar-label {
   opacity: 1;
 }
-</style>
-</head>
-<body>
-<header>
-  <h1>VeeNa Dev</h1>
-  <p>Création web - Gothic / Cyberpunk / Futuriste</p>
-</header>
+.lang-switch button {
+  background: transparent;
+  color: #00ffff;
+  border: 1px solid #00ffff;
+  padding: 6px 12px;
+  font-size: 13px;
+  font-family: 'Orbitron', sans-serif;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
 
-<div class="page-wrapper">
-  <div class="avatar avatar-left" aria-label="Avatar de Vincent">
-    <img src="https://raw.githubusercontent.com/NagashUD/SkynetLina/main/Recall/Autres/file_00000000b84861f48cfd582fb42eef45.jpg" alt="Avatar de Vincent" />
-    <span class="avatar-label">Vee</span>
+.lang-switch button:hover {
+  background: rgba(0, 255, 255, 0.1);
+  box-shadow: 0 0 5px #00ffff44;
+}
+
+.music-player {
+  display: flex;
+  align-items: center;
+}
+
+.music-player audio {
+  width: 140px;
+  filter: invert(1) grayscale(1) brightness(1.2);
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+}
+
+.music-player audio:hover {
+  opacity: 1;
+}
+.custom-audio-player {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #1a1a2e;
+  border: 1px solid #00ffff55;
+  padding: 6px 12px;
+  border-radius: 12px;
+  box-shadow: 0 0 8px #00ffff33;
+     margin-top: 1rem;
+}
+
+#playPause {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #00ffff;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+#playPause:hover {
+  transform: scale(1.2);
+}
+
+.progress-container {
+  width: 100px;
+  height: 6px;
+  background: #333;
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-bar {
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(90deg, #00ffff, #00aaff);
+  transition: width 0.1s linear;
+}
+@keyframes wave {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+.lang-switch,
+.custom-audio-player {
+  flex: 1;
+}
+.progress-bar.playing {
+  animation: wave 2s linear infinite;
+  background: linear-gradient(90deg, #00ffff, #0066ff, #00ffff);
+  background-size: 200% 100%;
+}
+.header-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+    .glow {
+      text-shadow: 0 0 5px #00ffff, 0 0 15px #ff00ff;
+    }
+    .glitch-switch {
+  animation: glitchText 0.5s;
+}
+
+@keyframes glitchText {
+  0% { opacity: 1; transform: translate(0); }
+  20% { opacity: 0.6; transform: translate(-2px, 1px); }
+  40% { opacity: 1; transform: translate(2px, -1px); }
+  60% { opacity: 0.6; transform: translate(-1px, 2px); }
+  80% { opacity: 1; transform: translate(1px, -2px); }
+  100% { opacity: 1; transform: translate(0); }
+}
+/* Fond bruit statique */
+@keyframes staticNoise {
+  0%, 100% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none;
+  background: url('https://upload.wikimedia.org/wikipedia/commons/d/d6/Static_noise_texture.png');
+  background-repeat: repeat;
+  opacity: 0.1;
+  animation: staticNoise 0.2s infinite;
+  mix-blend-mode: screen;
+  z-index: 9999;
+  filter: grayscale(100%) contrast(150%);
+}
+
+/* Scanlines */
+body::after {
+  content: "";
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    180deg,
+    rgba(255,255,255,0.05),
+    rgba(255,255,255,0.05) 1px,
+    transparent 2px,
+    transparent 4px
+  );
+  z-index: 10000;
+  mix-blend-mode: overlay;
+}
+
+
+
+.screen {
+    position: fixed;
+       background: radial-gradient(ellipse at center, #0ff 0%, #000 80%);
+  overflow: hidden;
+  filter: contrast(1.3) brightness(1.1);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  color: #0ff;
+  font-family: 'Orbitron', monospace;
+  font-size: 3rem;
+  text-align: center;
+  line-height: 40vh;
+  user-select: none;
+  pointer-events: none; /* click passe à travers */
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 9999;
+  display: none; /* caché par défaut */
+  }
+
+.glitch-fullpage .screen {
+  display: block;
+  opacity: 1;
+}
+  /* Ligne parasites horizontales animées */
+  .line {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: #0ff;
+    opacity: 0.05;
+    animation: flickerLine linear infinite;
+  }
+
+  @keyframes flickerLine {
+    0%, 100% {opacity: 0.05;}
+    50% {opacity: 0.15;}
+  }
+
+
+
+  /* Texte “PERTE DE SIGNAL” qui clignote */
+  .signal-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 4vw;
+    text-transform: uppercase;
+    color: #0ff;
+    text-shadow:
+      0 0 10px #0ff,
+      0 0 20px #0ff,
+      0 0 40px #0ff;
+    animation: flickerText 2s infinite;
+    letter-spacing: 0.3em;
+  }
+
+  @keyframes flickerText {
+    0%, 100% {opacity: 1;}
+    45% {opacity: 0.2;}
+    55% {opacity: 0.7;}
+    65% {opacity: 0.1;}
+  }
+</style>
+
+</head>
+ 
+<body>
+  
+
+<header class="header">
+  
+
+ 
+
+  <div class="header-center">
+ <p id="line1" data-fr="Création web -  Cyberpunk / Futuriste" data-en="Web creation - Cyberpunk / Futuristic">
+  Création web -  Cyberpunk / Futuriste
+</p>
   </div>
 
+
+
+</header>
+  <div class="container">
+    <h1 class="glow">SYSTEM INTERFACE ONLINE</h1>
+    <div class="panel">
+      <p>Welcome, Operator. All systems nominal. Awaiting input...</p>
+
+    </div>
+      <div class="custom-audio-player">
+    <button id="playPause" aria-label="Lecture/Pause">
+      ▶
+    </button>
+    <div class="progress-container">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+    <audio id="audioPlayer">
+      <source src="cyberpunk-background-276859.mp3" type="audio/mp3" />
+    </audio>
+  </div>
+          <div class="lang-switch">
+    <button id="langToggle">FR / ENG</button>
+  </div>
+  </div>
+<div class="page-wrapper">
+  
+  <div class="avatar avatar-left" aria-label="Avatar de Vincent">
+    <img src="https://raw.githubusercontent.com/NagashUD/SkynetLina/main/Recall/Autres/file_00000000b84861f48cfd582fb42eef45.jpg" alt="Avatar de Vincent" />
+    <span class="avatar-label">Vee, Art</span>
+  </div>
+  
+
   <div class="container" role="main" aria-label="Présentation des compétences et contact">
+    
     <!-- Ton contenu principal ici -->
-    <h2>À propos</h2>
-    <p>Développeur passionné, spécialisé en interfaces web futuristes, intégrations React, et animations néon.</p>
-    <h2>Compétences</h2>
-    <ul>
-      <li>JavaScript moderne & React</li>
-      <li>Animations Canvas & SVG</li>
-      <li>Design responsive et UI/UX futuriste</li>
-      <li>Gestion d'états Redux & Firebase</li>
-    </ul>
+    <h2 data-fr="À propos" data-en="About">À propos</h2>
+    <p data-fr="Développeurs passionnés, spécialisés en interfaces web futuristes, intégrations React, et animations néon."
+   data-en="Passionate developers, specialized in futuristic web interfaces, React integrations, and neon animations.">
+  Développeurs passionnés, spécialisés en interfaces web futuristes, intégrations React, et animations néon.
+</p>
+<h2 data-fr="Compétences" data-en="Skills">Compétences</h2>
+<ul>
+  <li data-fr="JavaScript moderne (ES6+), TypeScript" data-en="Modern JavaScript (ES6+), TypeScript">JavaScript moderne (ES6+), TypeScript</li>
+  <li data-fr="Frameworks : React, Next.js, Astro" data-en="Frameworks: React, Next.js, Astro">Frameworks : React, Next.js, Astro</li>
+  <li data-fr="Design UI/UX futuriste et responsive" data-en="Futuristic and responsive UI/UX design">Design UI/UX futuriste et responsive</li>
+  <li data-fr="Animations avancées : Canvas, SVG, GSAP" data-en="Advanced animations: Canvas, SVG, GSAP">Animations avancées : Canvas, SVG, GSAP</li>
+  <li data-fr="Systèmes temps réel : Firebase, WebSocket" data-en="Real-time systems: Firebase, WebSocket">Systèmes temps réel : Firebase, WebSocket</li>
+  <li data-fr="Bases de données : Firestore, Realtime DB, MongoDB" data-en="Databases: Firestore, Realtime DB, MongoDB">Bases de données : Firestore, Realtime DB, MongoDB</li>
+  <li data-fr="Architecture modulaire, composants réutilisables" data-en="Modular architecture, reusable components">Architecture modulaire, composants réutilisables</li>
+  <li data-fr="Accessibilité & performance web" data-en="Web accessibility & performance">Accessibilité & performance web</li>
+  <li data-fr="Outils de développement : Git, Vite, ESLint" data-en="Dev tools: Git, Vite, ESLint">Outils de développement : Git, Vite, ESLint</li>
+  <li data-fr="Jeux web & mécaniques interactives (Wireless: Override)" data-en="Web games & interactive mechanics (Wireless: Override)">Jeux web & mécaniques interactives (Wireless: Override)</li>
+</ul>
     <a class="button" href="https://wirelessoverride.vercel.app" target="_blank" rel="noopener noreferrer">
-      Démo Wireless: Override (v0.3)
+      Demo Wireless: Override (v0.3)
     </a>
     <h2>Contact</h2>
     <form aria-label="Formulaire de contact">
@@ -411,7 +708,7 @@
 
   <div class="avatar avatar-right" aria-label="Avatar de Lina">
     <img src="https://raw.githubusercontent.com/NagashUD/SkynetLina/main/Recall/Autres/Lina(1).jpg" alt="Avatar de Lina" />
-     <span class="avatar-label">Lina</span>
+     <span class="avatar-label">Lina, Code</span>
   </div>
 </div>
 
@@ -436,9 +733,75 @@
 </div>
 
 
-
+<script>
   
+ const langToggle = document.getElementById('langToggle');
+  let currentLang = 'fr';
+
+  langToggle.addEventListener('click', () => {
+    currentLang = currentLang === 'fr' ? 'en' : 'fr';
+
+    document.querySelectorAll('[data-fr]').forEach(el => {
+      el.classList.remove('glitch-switch'); // reset anim
+      void el.offsetWidth; // force reflow pour rejouer anim
+      el.textContent = el.dataset[currentLang];
+      el.classList.add('glitch-switch');
+    });
+
+    langToggle.textContent = currentLang === 'fr' ? 'FR / ENG' : 'ENG / FR';
+  });
+
+  const audio = document.getElementById("audioPlayer");
+const playPause = document.getElementById("playPause");
+const progressBar = document.getElementById("progressBar");
+
+playPause.addEventListener("click", () => {
+if (audio.paused) {
+  audio.play();
+  playPause.textContent = "⏸";
+  progressBar.classList.add("playing");
+} else {
+  audio.pause();
+  playPause.textContent = "▶";
+  progressBar.classList.remove("playing");
+}
+});
+
+audio.addEventListener("timeupdate", () => {
+  const progress = (audio.currentTime / audio.duration) * 100;
+  progressBar.style.width = `${progress}%`;
+});
+audio.addEventListener("ended", () => {
+  playPause.textContent = "▶";
+  progressBar.classList.remove("playing");
+});
+const toggleGlitchFullPage = () => {
+  document.body.classList.toggle('glitch-fullpage');
+};
+
+// Exemple : toggle quand on change de langue
+langToggle.addEventListener('click', () => {
+  toggleGlitchFullPage();
+  setTimeout(() => toggleGlitchFullPage(), 1500); // active 1.5s puis désactive
+});
+
 </script>
 
+
+
+<div class="screen">
+  <!-- Plusieurs lignes parasites avec positions aléatoires -->
+  <div class="line" style="top: 10%; animation-duration: 0.8s;"></div>
+  <div class="line" style="top: 25%; animation-duration: 1.2s;"></div>
+  <div class="line" style="top: 40%; animation-duration: 0.6s;"></div>
+  <div class="line" style="top: 60%; animation-duration: 1.1s;"></div>
+  <div class="line" style="top: 75%; animation-duration: 0.9s;"></div>
+
+  <!-- Glitch overlay -->
+  <div class="glitch"></div>
+
+  <!-- Texte au centre -->
+  <div class="signal-text">PERTE DE SIGNAL</div>
+</div>
 </body>
 </html>
