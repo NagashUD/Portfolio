@@ -101,7 +101,8 @@
   h2 {
     color: #00ffffcc;
     border-bottom: 2px solid #ff00ffbb;
-    padding-bottom: 0.4rem;
+    padding-bottom: 1.0rem;
+    padding-top: 1.0rem;
     margin-bottom: 1rem;
   }
 
@@ -552,6 +553,25 @@ body::after {
   mix-blend-mode: overlay;
 }
 
+.slideshow {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.slide {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  top: 0; left: 0;
+  opacity: 0;
+  transition: opacity 2s ease-in-out;
+}
+
+.slide.active {
+  opacity: 1;
+}
 
 
 .screen {
@@ -647,7 +667,7 @@ body::after {
   content: "";
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.6); /* overlay sombre */
+  background: rgba(0,0,0,0.5); /* overlay sombre */
   pointer-events: none; /* ne gêne pas les clics */
 }
 
@@ -669,7 +689,13 @@ body::after {
 </p>
   </div>
   <div class="noise-overlay">
-  <div class="background-overlay">
+<div class="background-overlay">
+  <div class="slideshow">
+    <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExeW9sb2g3YjF3cGlvdjhtNm80cjRpdjEycHljZHF0cTJmZTh5eHFjaSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/26FPKhUtNG3TW74f6/giphy.gif" class="slide active">
+    <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExenhrb2M5ODNnODJpanliaDRqMzVvMWI4ejB4NmNyYTU3cHd3ZGY2YyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3ohhwHVQR1t6syIu9q/giphy.gif" class="slide">
+    <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExb2htYWs0dnQ5N2Q1dGtybmw4ZzhqNHhpNTVzczF0NzRtcDhyaWJmeCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l0K4ooVdfUdgWWZ8c/giphy.gif" class="slide">
+  </div>
+
 
 
 </header>
@@ -687,7 +713,7 @@ body::after {
       <div class="progress-bar" id="progressBar"></div>
     </div>
     <audio id="audioPlayer">
-      <source src="cyberpunk-background-276859.mp3" type="audio/mp3" />
+        <source src="track1.mp3" type="audio/mp3" />
     </audio>
   </div>
           <div class="lang-switch">
@@ -798,20 +824,38 @@ langToggle.addEventListener('click', () => {
   }, 0); // délai de 4s avant de parler (ajuste si besoin)
 });
 
-  const audio = document.getElementById("audioPlayer");
+const audio = document.getElementById("audioPlayer");
 const playPause = document.getElementById("playPause");
 const progressBar = document.getElementById("progressBar");
+audio.loop = true;
+const playlist = [
+  "cyberpunk-background-276859.mp3",
+  "synthwave-beats-perfect-background-music-341849.mp3",
+  
+  "track3.mp3"
+];
+
+let currentTrack = 0;
+
+audio.src = playlist[currentTrack];
 
 playPause.addEventListener("click", () => {
-if (audio.paused) {
+  if (audio.paused) {
+    audio.play();
+    playPause.textContent = "⏸";
+    progressBar.classList.add("playing");
+  } else {
+    audio.pause();
+    playPause.textContent = "▶";
+    progressBar.classList.remove("playing");
+  }
+});
+
+// Quand une piste se termine, on passe à la suivante
+audio.addEventListener("ended", () => {
+  currentTrack = (currentTrack + 1) % playlist.length; // boucle
+  audio.src = playlist[currentTrack];
   audio.play();
-  playPause.textContent = "⏸";
-  progressBar.classList.add("playing");
-} else {
-  audio.pause();
-  playPause.textContent = "▶";
-  progressBar.classList.remove("playing");
-}
 });
 
 audio.addEventListener("timeupdate", () => {
@@ -831,7 +875,14 @@ langToggle.addEventListener('click', () => {
   toggleGlitchFullPage();
   setTimeout(() => toggleGlitchFullPage(), 1500); // active 1.5s puis désactive
 });
+  const slides = document.querySelectorAll('.slide');
+  let index = 0;
 
+  setInterval(() => {
+    slides[index].classList.remove('active');
+    index = (index + 1) % slides.length;
+    slides[index].classList.add('active');
+  }, 10000); // 10 sec entre chaque fond
 </script>
 
 
@@ -851,6 +902,6 @@ langToggle.addEventListener('click', () => {
 <div class="signal-text" data-fr="PERTE DE SIGNAL" data-en="SIGNAL LOST">PERTE DE SIGNAL</div>
 </div>
 </div>
-
+  </div>
 </body>
 </html>
